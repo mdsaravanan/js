@@ -8,9 +8,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 var c=document.getElementById("myCanvas");
 var ctx=c.getContext("2d");
-//ctx.moveTo(0,0);
-//ctx.lineTo(100,100);
-//ctx.stroke();
+ctx.lineWidth = 3;
 function Point(x, y) {
   this.x = x;
   this.y = y;
@@ -21,26 +19,6 @@ function Point(x, y) {
     this.y += d;
   }
 } // Point 
-
-function Row() {
-  this.rows = new Array();
-  this.current = 0;
-  function Iterator() {
-    this.current = 0;
-  }//Iterator
-  function next() {
-    if (this.current>this.rows.length) {
-       x = this.rows[this.current];
-       this.current++;
-       return x;
-    } else {
-       return 0;
-    }
-  }//next     
-  function add(coord) {
-    this.rows.push(coord);
-  }
-} //Row
 
 function WaveForm() {
   this.rungs = new Array();
@@ -64,7 +42,6 @@ function WaveForm() {
        }//for
     }//for
   } //draw
-  //cid.stroke();
 }//WaveForm
 
   
@@ -87,23 +64,13 @@ function ClockGen(lowWidth, highWidth, waveHeight, numCycle) {
 }
 
 clkPoints = ClockGen(50, 50, 70, 5);
-//document.write("It is farce"+clkPoints[0].x);
-//for (var i=0; i<clkPoints.length; i++) {
-//  document.write("True <br>");
-//  p= clkPoints[i]
-//  document.write("X= "+ p.x+" : Y= "+p.y +" <br>");
-//}
 w = new WaveForm();
 w.add(clkPoints, new Point(0, 100));
 w.add(clkPoints, new Point(50, 200));
 w.draw(ctx);
-//ctx.moveTo(0,0);
-//ctx.lineTo(100,100);
-//ctx.stroke();
 ctx.stroke();
 
 </script>
 
 </body>
 </html>
-
