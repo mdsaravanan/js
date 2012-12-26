@@ -8,7 +8,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 
 var c=document.getElementById("myCanvas");
 var ctx=c.getContext("2d");
-ctx.lineWidth = 3;
+ctx.lineWidth = 2;
 function Point(x, y) {
   this.x = x;
   this.y = y;
@@ -36,7 +36,7 @@ function WaveForm() {
       //document.write("Called <br>");
        var row = this.rungs[i];
        var origin = this.oCord[i];
-       cid.moveTo(origin.x, origin.y);
+       cid.moveTo(origin.x, origin.y+row[0].y);
        for (var j=0; j<row.length; j++) { 
           cid.lineTo(origin.x+row[j].x, origin.y+row[j].y);
        }//for
@@ -63,10 +63,29 @@ function ClockGen(lowWidth, highWidth, waveHeight, numCycle) {
   return row;
 }
 
+function PulseGen(activeLevel, pulseWidth, pulseHeight, start, end) {
+  var row = new Array();
+  var inactive = 0;
+  var active = pulseHeight;
+  if (activeLevel.toLowerCase() == "low") {
+    inactive = pulseHeight;
+    active = 0;
+  } 
+  row.push(new Point(0, active));
+  row.push(new Point(start, active));
+  row.push(new Point(start, inactive));
+  row.push(new Point(start+pulseWidth, inactive));
+  row.push(new Point(start+pulseWidth, active));
+  row.push(new Point(end, active));
+  return row;
+}
+
 clkPoints = ClockGen(50, 50, 70, 5);
+p1 = PulseGen("high", 120, 70, 170, 500);
 w = new WaveForm();
 w.add(clkPoints, new Point(0, 100));
 w.add(clkPoints, new Point(50, 200));
+w.add(p1, new Point(0, 300));
 w.draw(ctx);
 ctx.stroke();
 
